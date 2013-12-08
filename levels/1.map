@@ -1,0 +1,50 @@
+[level]
+tileset = map-tiles.png
+map = -------------R--------- 
+      -------------RRR------- 
+      Sooooooo-------R------- 
+      WWWWWWWo--------------- 
+      ------Wo-----RR-------- 
+      ------Wo----RRRR------- 
+      --R---Wo----RR--------- 
+      -RR---Wo--------------- 
+      -RR---Wo-------oooooooF 
+      -R----Wo---R---oWWWWWWW 
+      ------Wo---RR--oW------ 
+      ------Wo--RRRR-oW------ 
+      ------Wo-RRRRR-oW------ 
+      ------Wo-------oW----R- 
+      -RR---WoooooooooW----RR 
+      -RR---WWWWWWWWWWW-----R 
+      ----------------------- 
+
+[.]
+name = ground
+tile = 0,1
+
+[S]
+name = start
+tile = 1,2
+blocked = true
+entrance = true
+
+[o]
+name = path
+tile = 0,0
+blocked = true
+
+[F]
+name = finish
+tile = 1,1
+blocked = true
+exit = true
+
+[W]
+name = water
+tile = 1,0
+blocked = true
+
+[R]
+name = rock
+tile = 0,2
+blocked = true
