@@ -89,8 +89,8 @@ class TitleScene(object):
                                             (255, 255, 255))
         sub_text = self.sub_font.render('press [space] to start', True,
                                         (255, 255, 255))
-        screen.blit(title_text, (250, 200))
-        screen.blit(sub_text, (280, 300))
+        screen.blit(title_text, (260, 200))
+        screen.blit(sub_text, (290, 300))
 
     def update(self):
         pass
