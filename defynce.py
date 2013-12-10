@@ -19,7 +19,7 @@ if __name__ == "__main__":
     game_over = False
     while not game_over:
 
-        clock.tick(75)
+        clock.tick(60)
 
         if pygame.event.get(pygame.QUIT):
             game_over = True

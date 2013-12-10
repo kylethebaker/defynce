@@ -1,0 +1,59 @@
+# level one data
+
+level:
+  map:
+    tileset: map-tiles.png
+    layout: |
+            WWWWWWWWWWWWWWWWWWWWWWW
+            WWWWWWWWWWWoooooooooWWW
+            WWWWWWWWWWWoWWWWWWWoWWW
+            WWWWWWWWWWWoWW---WWoWWW
+            WWWWWWWWWWWoWW---WWoWWW
+            WWWWWWWWWWWoWWWWWWWoWWW
+            WWWWWWWWWWWoWWWWWWWoWWW
+            WWWWWoooooooWWWWWWWoWWW
+            WWWWWo--WWW--WWWWWWoWWW
+            WWWWWo-WWWW--WWWWWWoWWW
+            WWWWWoWWWWWWooooooooWWW
+            WWWWWoWW--WWoWWWWWWWWWW
+            WWWWWoWW--WWoW---WWWWWW
+            SoooooWWWWWWoW---WWWWWW
+            WWWWWWWWWWWWoWWWWWWWWWW
+            WWWWWWWWWWWWooooooooooF
+            WWWWWWWWWWWWWWWWWWWWWWW
+    tilemap:
+      - key: '-'
+        name: ground
+        tile: 0,1
+
+      - key: 'S'
+        name: entrance
+        tile: 1,2
+        attributes:
+          blocked: True
+          entrance: True
+          
+      - key: 'o'
+        name: path
+        tile: 0,0
+        attributes:
+          blocked: True
+
+      - key: 'F'
+        name: exit
+        tile: 1,1
+        attributes:
+          blocked: True
+          exit: True
+          
+      - key: 'W'
+        name: water
+        tile: 1,0
+        attributes:
+          blocked: True
+
+      - key: 'R'
+        name: rock
+        tile: 0,2
+        attributes:
+          blocked: True
