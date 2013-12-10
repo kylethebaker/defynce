@@ -22,6 +22,19 @@ class Scene(object):
         raise NotImplementedError
 
 
+""" SceneManager object """
+
+
+class SceneManager(object):
+
+    def __init__(self):
+        self.go_to(TitleScene())
+
+    def go_to(self, scene):
+        self.scene = scene
+        self.scene.manager = self
+
+
 """ Level Scene object """
 
 
@@ -51,7 +64,38 @@ class LevelScene(Scene):
         overlays.draw(screen)
         pygame.display.flip()
 
+    def update(self):
+        pass
+
     def handle_events(self, events):
         for e in events:
             if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
                 pass
+
+
+""" Title Screen Scene object """
+
+
+class TitleScene(object):
+
+    def __init__(self):
+        super(TitleScene, self).__init__()
+        self.title_font = pygame.font.SysFont('Open Sans', 60)
+        self.sub_font = pygame.font.SysFont('Open Sans', 20)
+
+    def render(self, screen):
+        screen.fill((108, 192, 78))
+        title_text = self.title_font.render('def[Y]nce', True,
+                                            (255, 255, 255))
+        sub_text = self.sub_font.render('press [space] to start', True,
+                                        (255, 255, 255))
+        screen.blit(title_text, (250, 200))
+        screen.blit(sub_text, (280, 300))
+
+    def update(self):
+        pass
+
+    def handle_events(self, events):
+        for e in events:
+            if e.type == pygame.KEYDOWN and e.key == pygame.K_SPACE:
+                self.manager.go_to(LevelScene('1'))

@@ -12,7 +12,7 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((800, 600))
     clock = pygame.time.Clock()
 
-    scene = LevelScene('1')
+    manager = SceneManager()
 
     """ start main loop """
 
@@ -25,7 +25,8 @@ if __name__ == "__main__":
             game_over = True
             pass
 
-        scene.handle_events(pygame.event.get())
-        scene.render(screen)
+        manager.scene.handle_events(pygame.event.get())
+        manager.scene.update()
+        manager.scene.render(screen)
 
         pygame.display.flip()
