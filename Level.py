@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 
 import pygame
-import ConfigParser
+import yaml
 
 
 """ load the tiles from the sprite """
@@ -26,25 +26,35 @@ def load_tile_table(filename, width, height):
 class Level(object):
 
     """ loads the .map data """
+    """ TODO: this should just accept the map attribute from level.yaml """
 
     def load_file(self, filename):
 
-        parser = ConfigParser.ConfigParser()
-        parser.read(filename)
+        yamlfile = open(filename)
+        data_map = yaml.safe_load(yamlfile)
+        yamlfile.close()
+
+        map_data = data_map.get('level')['map']
 
         # read which sprite to use from the .map
-        self.tileset = parser.get("level", "tileset")
+        self.tileset = map_data['tileset']
 
         # creates a list with lines from the map attribute
-        self.map = []
-        self.map = parser.get("level", "map").split("\n")
+        self.map = map_data['layout'].split("\n")
+        self.map.pop()
 
         # for each map identifier section, create a dict of attributes
         self.key = {}
-        for section in parser.sections():
-            if len(section) == 1:
-                desc = dict(parser.items(section))
-                self.key[section] = desc
+
+        for tile in map_data['tilemap']:
+            tile_key = ''
+            tile_def = {}
+            for key, val in tile.items():
+                if key == 'key':
+                    tile_key = val
+                else:
+                    tile_def[key] = val
+            self.key[tile_key] = tile_def
 
         # width/height in number of chars/lines from map attr
         self.width = len(self.map[0])
@@ -63,6 +73,7 @@ class Level(object):
             return {}
 
     """ get bool value of attribute """
+    """ TODO: need to update to new tile data layout """
 
     def get_bool(self, x, y, name):
         value = self.get_tile(x, y).get(name)
@@ -80,6 +91,7 @@ class Level(object):
         image = pygame.Surface((self.width * tile_width,
                                 self.height * tile_height))
         overlays = {}
+        print(self.map)
         for map_y, line in enumerate(self.map):
             for map_x, c in enumerate(line):
                 try:

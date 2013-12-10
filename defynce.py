@@ -4,6 +4,7 @@ import pygame
 import pygame.locals
 
 from Level import *
+from Scenes import *
 
 if __name__ == "__main__":
 
@@ -20,7 +21,7 @@ if __name__ == "__main__":
     }
 
     level = Level()
-    level.load_file('levels/1.map')
+    level.load_file('levels/1.lvl.yaml')
 
     clock = pygame.time.Clock()
 
@@ -32,9 +33,9 @@ if __name__ == "__main__":
     for (x, y), image in overlay_dict.iteritems():
         overlay = pygame.sprite.Sprite(overlays)
         overlay.image = image
-        overlay.rect = image.get_rect().move(x * 10, y * 10 - 10)
+        overlay.rect = image.get_rect().move(x * 10, y * 10)
 
-    screen.fill((230,230,230))
+    screen.fill((230, 230, 230))
     screen.blit(background, (0, 0))
     overlays.draw(screen)
     pygame.display.flip()
