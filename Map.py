@@ -20,10 +20,10 @@ def load_tile_table(filename, width, height):
     return tile_table
 
 
-""" start Level object """
+""" start Map object """
 
 
-class Level(object):
+class Map(object):
 
     """ loads the .map data """
     """ TODO: this should just accept the map attribute from level.yaml """

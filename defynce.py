@@ -3,7 +3,7 @@
 import pygame
 import pygame.locals
 
-from Level import *
+from Map import *
 from Scenes import *
 
 if __name__ == "__main__":
@@ -20,7 +20,7 @@ if __name__ == "__main__":
                                          map_tile_height),
     }
 
-    level = Level()
+    level = Map()
     level.load_file('levels/1.lvl.yaml')
 
     clock = pygame.time.Clock()
