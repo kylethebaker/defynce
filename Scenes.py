@@ -1,6 +1,8 @@
 import pygame
 import pygame.locals
 
+from Map import *
+
 
 """ base Scene object """
 
@@ -25,5 +27,31 @@ class Scene(object):
 
 class LevelScene(Scene):
 
-    def __init__(self):
+    def __init__(self, level_name):
         super(LevelScene, self).__init__()
+
+        yaml_file = open('levels/' + level_name + '.lvl.yaml')
+        level_data = yaml.safe_load(yaml_file)
+        yaml_file.close()
+
+        map_data = level_data.get('level')['map']
+        self.map = Map(map_data)
+
+    def render(self, screen):
+        background, overlay_dict = self.map.render()
+        overlays = pygame.sprite.RenderUpdates()
+
+        for (x, y), image in overlay_dict.iteritems():
+            overlay = pygame.sprite.Sprite(overlays)
+            overlay.image = image
+            overlay.rect = image.get_rect().move(x * 10, y * 10)
+
+        screen.fill((230, 230, 230))
+        screen.blit(background, (0, 0))
+        overlays.draw(screen)
+        pygame.display.flip()
+
+    def handle_events(self, events):
+        for e in events:
+            if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
+                pass

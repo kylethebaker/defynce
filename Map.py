@@ -3,22 +3,19 @@
 import pygame
 import yaml
 
-
-""" load the tiles from the sprite """
-
-
-def load_tile_table(filename, width, height):
-    image = pygame.image.load(filename).convert()
-    image_width, image_height = image.get_size()
-    tile_table = []
-    for tile_x in range(0, image_width / width):
-        line = []
-        tile_table.append(line)
-        for tile_y in range(0, image_height / height):
-            rect = (tile_x * width, tile_y * height, width, height)
-            line.append(image.subsurface(rect))
-    return tile_table
-
+"""
+    def load_tile_table(filename, width, height):
+        image = pygame.image.load(filename).convert()
+        image_width, image_height = image.get_size()
+        tile_table = []
+        for tile_x in range(0, image_width / width):
+            line = []
+            tile_table.append(line)
+            for tile_y in range(0, image_height / height):
+                rect = (tile_x * width, tile_y * height, width, height)
+                line.append(image.subsurface(rect))
+        return tile_table
+"""
 
 """ start Map object """
 
@@ -26,15 +23,8 @@ def load_tile_table(filename, width, height):
 class Map(object):
 
     """ loads the .map data """
-    """ TODO: this should just accept the map attribute from level.yaml """
 
-    def load_file(self, filename):
-
-        yamlfile = open(filename)
-        data_map = yaml.safe_load(yamlfile)
-        yamlfile.close()
-
-        map_data = data_map.get('level')['map']
+    def __init__(self, map_data):
 
         # read which sprite to use from the .map
         self.tileset = map_data['tileset']
@@ -59,6 +49,17 @@ class Map(object):
         # width/height in number of chars/lines from map attr
         self.width = len(self.map[0])
         self.height = len(self.map)
+
+        # load the tiles from the sprite
+        self.tile_table = []
+        image = pygame.image.load('levels/' + self.tileset).convert()
+        image_width, image_height = image.get_size()
+        for tile_x in range(0, image_width / 30):
+            line = []
+            self.tile_table.append(line)
+            for tile_y in range(0, image_height / 30):
+                rect = (tile_x * 30, tile_y * 30, 30, 30)
+                line.append(image.subsurface(rect))
 
     """ get attributes from a tile """
 
@@ -86,12 +87,10 @@ class Map(object):
 
     """ render the map """
 
-    def render(self, tile_width, tile_height, map_cache):
-        tiles = map_cache[self.tileset]
-        image = pygame.Surface((self.width * tile_width,
-                                self.height * tile_height))
+    def render(self):
+        image = pygame.Surface((self.width * 30,
+                                self.height * 30))
         overlays = {}
-        print(self.map)
         for map_y, line in enumerate(self.map):
             for map_x, c in enumerate(line):
                 try:
@@ -100,7 +99,7 @@ class Map(object):
                 except (ValueError, KeyError):
                     # Default to ground tile
                     tile = 0, 1
-                tile_image = tiles[tile[0]][tile[1]]
-                image.blit(tile_image, (map_x * tile_width,
-                                        map_y * tile_height))
+                tile_image = self.tile_table[tile[0]][tile[1]]
+                image.blit(tile_image, (map_x * 30,
+                                        map_y * 30))
         return image, overlays
