@@ -68,7 +68,12 @@ class LevelScene(Scene):
         pass
 
     def handle_events(self, events):
+        # FOR TESTING
         for e in events:
+            if e.type == pygame.KEYDOWN and e.key == pygame.K_TAB:
+                self.manager.go_to(TitleScene())
+            if e.type == pygame.KEYDOWN and e.key == pygame.K_1:
+                self.manager.go_to(LevelScene('1'))
             if e.type == pygame.KEYDOWN and e.key == pygame.K_2:
                 self.manager.go_to(LevelScene('2'))
 
