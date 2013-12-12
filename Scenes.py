@@ -50,18 +50,21 @@ class LevelScene(Scene):
         map_data = level_data.get('level')['map']
         self.map = Map(map_data)
 
-    def render(self, screen):
-        background, overlay_dict = self.map.render()
-        overlays = pygame.sprite.RenderUpdates()
+        # doing this in init so that the map will be cached (right?)
+        # it was in render() without self.{background,overlays} being object
+        # vars
+        self.background, overlay_dict = self.map.render()
+        self.overlays = pygame.sprite.RenderUpdates()
 
         for (x, y), image in overlay_dict.iteritems():
-            overlay = pygame.sprite.Sprite(overlays)
+            overlay = pygame.sprite.Sprite(self.overlays)
             overlay.image = image
             overlay.rect = image.get_rect().move(x * 10, y * 10)
 
+    def render(self, screen):
         screen.fill((230, 230, 230))
-        screen.blit(background, (0, 0))
-        overlays.draw(screen)
+        screen.blit(self.background, (0, 0))
+        self.overlays.draw(screen)
         pygame.display.flip()
 
     def update(self):
